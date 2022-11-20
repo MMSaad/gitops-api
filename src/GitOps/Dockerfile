@@ -6,16 +6,16 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["GitOps/GitOps.csproj", "GitOps/"]
-RUN dotnet restore "GitOps/GitOps.csproj"
+COPY ["GitOps/GitOps.Api.csproj", "GitOps/"]
+RUN dotnet restore "GitOps/GitOps.Api.csproj"
 COPY . .
 WORKDIR "/src/GitOps"
-RUN dotnet build "GitOps.csproj" -c Release -o /app/build
+RUN dotnet build "GitOps.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "GitOps.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "GitOps.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "GitOps.dll"]
+ENTRYPOINT ["dotnet", "GitOps.Api.dll"]
