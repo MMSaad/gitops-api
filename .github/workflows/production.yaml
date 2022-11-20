@@ -32,3 +32,6 @@ jobs:
     - name: Push Docker Image
       run: docker push mmsaad85/gitops:${{ env.VERSION}}
       working-directory: src/GitOps
+    - name: Push Docker Image
+      run: docker push mmsaad85/gitops:latest
+      working-directory: src/GitOps
