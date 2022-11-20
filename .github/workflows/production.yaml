@@ -1,0 +1,31 @@
+name: Production
+on:
+  push:
+   branches:
+     - master
+
+jobs:
+  build:
+   runs-on: ubuntu-latest
+   timeout-minutes: 10
+   steps:
+    - uses: actions/checkout@v2
+    - name: Login with Docker Hub
+      uses: docker@login-action@v2
+      with:
+       username: ${{ secrets.DOCKERHUB_USERNAME}}
+       password: ${{ secrets.DOCKERHUB_TOKEN}}
+    - name: Read VERSION File
+      run: |
+        VER=$(cat VERSION)
+        echo "VERSION=$VER" >> $GITHUB_ENV
+      working-directory: src/GitOps
+    - name: Build Docker Image
+      run: docker build -t GitOps:${{ env.VERSION}} .
+      working-directory: src/GitOps
+    - name: Tag Docker Image
+      run: docker tag GitOps:${{ env.VERSION}} mmsaad85/GitOps:${{ env.VERSION}}
+      working-directory: src/GitOps
+    - name: Push Docker Image
+      run: docker push mmsaad85/GitOps:${{ env.VERSION}}
+      working-directory: src/GitOps
