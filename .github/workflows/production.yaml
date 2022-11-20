@@ -21,11 +21,11 @@ jobs:
         echo "VERSION=$VER" >> $GITHUB_ENV
       working-directory: src/GitOps
     - name: Build Docker Image
-      run: docker build -t GitOps:${{ env.VERSION}} .
+      run: docker build -t gitops:${{ env.VERSION}} .
       working-directory: src/GitOps
     - name: Tag Docker Image
-      run: docker tag GitOps:${{ env.VERSION}} mmsaad85/GitOps:${{ env.VERSION}}
+      run: docker tag gitops:${{ env.VERSION}} mmsaad85/gitops:${{ env.VERSION}}
       working-directory: src/GitOps
     - name: Push Docker Image
-      run: docker push mmsaad85/GitOps:${{ env.VERSION}}
+      run: docker push mmsaad85/gitops:${{ env.VERSION}}
       working-directory: src/GitOps
