@@ -10,12 +10,13 @@ namespace GitOps.Api.Controllers;
 
         public async Task<IActionResult> Index()
         {
-
+            var version = await System.IO.File.ReadAllTextAsync("VERSION");
+            return Ok(version);
         }
 
-        public async Task<IActionResult> Config()
-        {
+        //public async Task<IActionResult> Config()
+        //{
 
-        }
+        //}
     }
 
