@@ -5,8 +5,8 @@ WORKDIR /app
 EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["GitOps/GitOps.Api.csproj", "GitOps/"]
+WORKDIR /src/GitOps
+COPY ["GitOps.Api.csproj", "GitOps/"]
 RUN dotnet restore "GitOps/GitOps.Api.csproj"
 COPY . .
 WORKDIR "/src/GitOps"
