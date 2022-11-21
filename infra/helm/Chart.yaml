@@ -1,0 +1,10 @@
+apiVersion: v1
+name: gitops
+version: 1.0.0
+keywords:
+  - GitOps
+  - AspNetCore
+  - K8s
+maintainers:
+  - name: Mustafa Saad
+    email: dev.m.saad@gmail.com

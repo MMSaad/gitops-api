@@ -15,23 +15,12 @@ jobs:
       with:
        username: ${{ secrets.DOCKERHUB_USERNAME}}
        password: ${{ secrets.DOCKERHUB_TOKEN}}
-    - name: Read VERSION File
-      run: |
-        VER=$(cat VERSION)
-        echo "VERSION=$VER" >> $GITHUB_ENV
-      working-directory: src/GitOps
     - name: Build Docker Image
-      run: docker build -t gitops:${{ env.VERSION}} .
+      run: docker build -t gitops:${{ env.GITHUB_SHA}} .
       working-directory: src/GitOps
     - name: Tag Docker Image
-      run: docker tag gitops:${{ env.VERSION}} mmsaad85/gitops:${{ env.VERSION}}
-      working-directory: src/GitOps
-    - name: Tag Docker Image to latest
-      run: docker tag gitops:${{ env.VERSION}} mmsaad85/gitops:latest
+      run: docker tag gitops:${{ env.GITHUB_SHA}} mmsaad85/gitops:${{ env.GITHUB_SHA}}
       working-directory: src/GitOps
     - name: Push Docker Image
-      run: docker push mmsaad85/gitops:${{ env.VERSION}}
-      working-directory: src/GitOps
-    - name: Push Docker Image
-      run: docker push mmsaad85/gitops:latest
+      run: docker push mmsaad85/gitops:${{ env.GITHUB_SHA}}
       working-directory: src/GitOps

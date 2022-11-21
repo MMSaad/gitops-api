@@ -1,0 +1,32 @@
+namespace:
+ name: gitops-development
+
+
+deployment:
+  name: gitops
+  replicas: 2
+  label: gitops
+  repository: mmsaad85/gitops
+  version: latest
+  pullPolicy: Always
+  livenessProbe:
+    path: /api/home
+    port: 80
+  readinessProbe:
+    path: /api/home
+    port: 80
+  resources:
+    requests:
+      memory: 64Mi
+      cpu: 250m
+    limits:
+      memory: 128Mi
+      cpu: 500m
+  containerPort: 80
+
+service:
+  name: gitops-svc
+  type: ClusterIP
+  label: gitops
+  port: 80
+  protocol: TCP

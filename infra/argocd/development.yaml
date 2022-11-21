@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitops-development
+  namespace: argocd
+spec:
+  project: default
+  source:
+   repoURL: https://github.com/MMSaad/gitops-api
+   path: helm
+   targetRevision: development
+   helm:
+    valueFiles:
+    - values.yaml
+    parameters:
+    - name: deployment.version
+      value: $ARGOCD_APP_REVISION
+  destination:
+   server: https://kubernetes.default.svc
+   namespace: gitops-development
+  syncPolicy:
+   automated: {}
